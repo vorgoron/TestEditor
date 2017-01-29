@@ -1,0 +1,51 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"type": {
+			"type": "string",
+			"default": "input",
+			"options": {
+				"hidden": true
+			}
+		},
+		"lable": {
+			"type": "integer",
+			"default": "{{i1}}",
+			"options": {
+				"hidden": true
+			}
+		},
+		"text": {
+			"type": "string",
+			"title": "Текст задания"
+		},
+		"textBefore": {
+			"title": "Текст до ответа",
+			"type": "string"
+		},
+		"textAfter": {
+			"title": "Текст после ответа",
+			"type": "string"
+		},
+		"answer": {
+			"type": "string",
+			"options": {
+				"hidden": true
+			}
+		},
+		"correct": {
+			"title": "Правильный ответ",
+			"type": "string"
+		}
+	},
+	"required": [
+		"type",
+		"lable",
+		"text",
+		"textBefore",
+		"textAfter",
+		"answer",
+		"correct"
+	]
+}

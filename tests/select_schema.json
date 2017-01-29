@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Выбор правильного варианта",
+  "properties": {
+    "type": {
+      "type": "string",
+      "default": "select",
+      "options": {
+           "hidden": true
+      }
+    },
+    "lable": {
+      "type": "integer",
+      "default": "{{i1}}",
+      "options": {
+           "hidden": true
+      }
+    },
+    "text": {
+      "type": "string",
+      "title": "Текст задания"
+    },
+    "selects": {
+      "type": "array",
+      "title": "Предложения",
+      "items": {
+        "type": "object",
+        "headerTemplate": "Предложение {{ i1 }}",
+        "properties": {
+          "textBefore": {
+            "title": "Текст до ответа",
+            "type": "string"
+          },
+          "variants": {
+            "type": "array",
+            "title": "Варианты",
+            "format": "table",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "title": "Номер",
+                  "default": "{{i1}}",
+                  "options": {
+                      "input_width": "20px"
+                  }
+                },
+                "name": {
+                  "title": "Ответ",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name"
+              ]
+            }
+          },
+          "answer": {
+            "title": "Номер правильного ответа",
+            "type": "integer"
+          },
+          "textAfter": {
+            "title": "Текст после ответа",
+            "type": "string"
+          },
+          "selectedVariant": {
+            "type": "null"
+          }
+        },
+        "required": [
+          "variants",
+          "textBefore",
+          "textAfter",
+          "answer",
+          "selectedVariant"
+        ]
+      }
+    }
+  },
+  "required": [
+    "type",
+    "lable",
+    "text",
+    "selects"
+  ]
+}

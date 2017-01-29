@@ -1,0 +1,457 @@
+{
+	"type": "object",
+	"properties": {
+		"name": {
+            "title": "Текст тестов",
+			"type": "string"
+		},
+		"tasks": {
+            "title": "Задания",
+			"type": "array",
+          	"format": "tabs",
+			"items": {
+            	"title": "Задание",
+            	"headerTemplate": "Задание {{i}}",
+				"oneOf": [{
+					"$ref": "#/definitions/select",
+					"title": "Выбор правильного варианта"
+				}, {
+					"$ref": "#/definitions/concordance",
+					"title": "Соответствие"
+				}, {
+					"$ref": "#/definitions/order",
+					"title": "Порядок"
+				}, {
+					"$ref": "#/definitions/checkbox",
+					"title": "Выбор из нескольких"
+				}, {
+					"$ref": "#/definitions/input",
+					"title": "Ввод значения"
+				}]
+			}
+		}
+	},
+	"required": [
+		"name",
+		"tasks"
+	],
+	"definitions": {
+		"select": {
+			"type": "object",
+			"title": "Выбор правильного варианта",
+			"properties": {
+				"type": {
+					"type": "string",
+					"default": "select",
+					"options": {
+						"hidden": true
+					}
+				},
+				"lable": {
+					"type": "integer",
+					"default": "{{i1}}",
+					"options": {
+						"hidden": true
+					}
+				},
+				"text": {
+					"type": "string",
+					"title": "Текст задания"
+				},
+				"answer": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"correct": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"variants": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"parts": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"selects": {
+					"type": "array",
+					"title": "Предложения",
+					"items": {
+						"type": "object",
+						"headerTemplate": "Предложение {{ i1 }}",
+						"properties": {
+							"textBefore": {
+								"title": "Текст до ответа",
+								"type": "string"
+							},
+							"variants": {
+								"type": "array",
+								"title": "Варианты",
+								"format": "table",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "integer",
+											"title": "Номер",
+											"default": "{{i1}}",
+											"options": {
+												"input_width": "20px"
+											}
+										},
+										"name": {
+											"title": "Ответ",
+											"type": "string"
+										}
+									},
+									"required": [
+										"id",
+										"name"
+									]
+								}
+							},
+							"answer": {
+								"title": "Номер правильного ответа",
+								"type": "integer"
+							},
+							"textAfter": {
+								"title": "Текст после ответа",
+								"type": "string"
+							},
+							"selectedVariant": {
+								"type": "null"
+							}
+						},
+						"required": [
+							"variants",
+							"textBefore",
+							"textAfter",
+							"answer",
+							"selectedVariant"
+						]
+					}
+				}
+			}
+		},
+		"concordance": {
+			"$schema": "http://json-schema.org/draft-04/schema#",
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"default": "concordance",
+					"options": {
+						"hidden": true
+					}
+				},
+				"lable": {
+					"type": "integer",
+					"default": "1",
+					"options": {
+						"hidden": true
+					}
+				},
+				"text": {
+					"type": "string",
+					"title": "Текст задания"
+				},
+				"parts": {
+					"type": "array",
+					"title": "Левая часть",
+					"format": "table",
+					"items": {
+						"type": "object",
+						"properties": {
+							"text": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"text"
+						]
+					}
+				},
+				"variants": {
+					"type": "array",
+					"title": "Правая часть",
+					"format": "table",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"title": "Порядок",
+								"type": "integer",
+								"options": {
+									"input_width": "20px"
+								}
+							},
+							"text": {
+								"title": "Ответ",
+								"type": "string"
+							}
+						},
+						"required": [
+							"id",
+							"text"
+						]
+					}
+				},
+				"answer": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"correct": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"selects": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				}
+			}
+		},
+		"order": {
+			"$schema": "http://json-schema.org/draft-04/schema#",
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"default": "order",
+					"options": {
+						"hidden": true
+					}
+				},
+				"lable": {
+					"type": "integer",
+					"default": "0",
+					"options": {
+						"hidden": true
+					}
+				},
+				"text": {
+					"type": "string",
+					"title": "Текст задания"
+				},
+				"is_vertikal": {
+					"type": "boolean",
+					"title": "Вертикальный?"
+				},
+				"variants": {
+					"title": "Варианты",
+					"format": "table",
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"title": "Порядок",
+								"type": "integer",
+								"options": {
+									"input_width": "20px"
+								}
+							},
+							"text": {
+								"title": "Ответы",
+								"type": "string"
+							}
+						},
+						"required": [
+							"id",
+							"text"
+						]
+					}
+				},
+				"answer": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"correct": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"parts": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"selects": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				}
+			},
+			"required": [
+				"type",
+				"lable",
+				"text",
+				"variants"
+			]
+		},
+		"checkbox": {
+			"$schema": "http://json-schema.org/draft-04/schema#",
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"default": "checkbox",
+					"options": {
+						"hidden": true
+					}
+				},
+				"lable": {
+					"type": "integer",
+					"default": "1",
+					"options": {
+						"hidden": true
+					}
+				},
+				"text": {
+					"title": "Текст задания",
+					"type": "string"
+				},
+				"variants": {
+					"title": "Варианты",
+					"format": "table",
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"title": "Номер",
+								"type": "integer",
+								"options": {
+									"input_width": "20px"
+								}
+							},
+							"text": {
+								"title": "Ответы",
+								"type": "string"
+							}
+						},
+						"required": [
+							"id",
+							"text"
+						]
+					}
+				},
+				"answer": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"selects": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"correct": {
+					"type": "array",
+					"title": "Правильные ответы",
+					"format": "table",
+					"items": {
+						"type": "integer"
+					}
+				}
+			},
+			"required": [
+				"type",
+				"lable",
+				"text",
+				"variants",
+				"answer",
+				"correct"
+			]
+		},
+		"input": {
+			"$schema": "http://json-schema.org/draft-04/schema#",
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"default": "input",
+					"options": {
+						"hidden": true
+					}
+				},
+				"lable": {
+					"type": "integer",
+					"default": "{{i1}}",
+					"options": {
+						"hidden": true
+					}
+				},
+				"text": {
+					"type": "string",
+					"title": "Текст задания"
+				},
+				"textBefore": {
+					"title": "Текст до ответа",
+					"type": "string",
+					"options": {
+						"expand_height": true
+					}
+				},
+				"textAfter": {
+					"title": "Текст после ответа",
+					"type": "string"
+				},
+				"answer": {
+					"type": "array",
+					"items": {},
+					"options": {
+						"hidden": true
+					}
+				},
+				"correct": {
+					"title": "Правильный ответ",
+					"type": "string"
+				}
+			},
+			"required": [
+				"type",
+				"lable",
+				"text",
+				"textBefore",
+				"textAfter",
+				"answer",
+				"correct"
+			]
+		}
+	}
+}

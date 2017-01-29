@@ -1,0 +1,74 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"type": {
+			"type": "string",
+			"default": "checkbox",
+			"options": {
+				"hidden": true
+			}
+		},
+		"lable": {
+			"type": "integer",
+			"default": "1",
+			"options": {
+				"hidden": true
+			}
+		},
+		"text": {
+			"title": "Текст задания",
+			"type": "string"
+		},
+		"variants": {
+			"title": "Варианты",
+			"format": "table",
+			"type": "array",
+			"items": {
+				"title": "Вариант",
+				"type": "object",
+				"properties": {
+					"id": {
+						"title": "Номер",
+						"type": "integer",
+						"options": {
+							"input_width": "20px"
+						}
+					},
+					"text": {
+						"title": "Ответы",
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"text"
+				]
+			}
+		},
+		"answer": {
+			"type": "array",
+			"items": {},
+			"options": {
+				"hidden": true
+			}
+		},
+		"correct": {
+			"type": "array",
+			"title": "Правильные ответы",
+			"format": "table",
+			"items": {
+				"title": "Номер",
+				"type": "integer"
+			}
+		}
+	},
+	"required": [
+		"type",
+		"lable",
+		"text",
+		"variants",
+		"answer",
+		"correct"
+	]
+}

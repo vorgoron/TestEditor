@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Редактор тестов</title>
+
+    <!-- Foundation CSS framework (Bootstrap and jQueryUI also supported) -->
+    <link rel='stylesheet' href='http://cdn.jsdelivr.net/bootstrap/3.2.0/css/bootstrap.css'>
+    <!-- Font Awesome icons (Bootstrap, Foundation, and jQueryUI also supported) -->
+    <link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+
+    <link rel='stylesheet' href='http://cdn.jsdelivr.net/sceditor/1.4.3/jquery.sceditor.default.min.css'>
+    <link rel='stylesheet' href='http://cdn.jsdelivr.net/sceditor/1.4.3/themes/modern.min.css'>
+    <script src='http://cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js'></script>
+    <script src='http://cdn.jsdelivr.net/sceditor/1.4.3/jquery.sceditor.min.js'></script>
+    <script src='http://cdn.jsdelivr.net/sceditor/1.4.3/plugins/xhtml.js'></script>
+
+    <script src="dist/jsoneditor.js"></script>
+</head>
+<body>
+<div class='container'>
+    <div class='row' style='padding-bottom: 15px;'>
+        <div class='col-md-12'>
+            <h1>Редактор тестов</h1>
+
+            <p>
+              Данный сервис позволяет создавать и редактировать тесты для электронных учебников.
+            </p>
+            <ul>
+              <li>Нажмите "Открыть" для того чтобы открыть для редактирования файл теста</li>
+              <li>Нажмите "Сохранить" для сохранения теста в файл</li>
+              <li>Нажмите "Очистить" для очистки и создания нового теста</li>
+            </ul>
+        </div>
+    </div>
+    <div class='row' style='padding-bottom: 15px;'>
+        <div class='col-md-12'>
+            <label class="btn btn-info btn-file">
+              Открыть <input type='file' id='json_file' style="display: none;">
+            </label>
+            <button id='save_file' class='btn btn-info'>Сохранить</button>
+            <button id='restore' class='btn btn-info'>Очистить</button>
+            <span id='valid_indicator' class='label label-success'></span>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-12'>
+            <div id='editor_holder'></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    JSONEditor.defaults.theme = 'bootstrap3';
+    JSONEditor.defaults.iconlib = 'fontawesome4';
+    JSONEditor.plugins.sceditor.style = "http://cdn.jsdelivr.net/sceditor/1.4.3/jquery.sceditor.default.min.css";
+
+    var starting_value = {};
+
+    // Initialize the editor
+    var editor = new JSONEditor(document.getElementById('editor_holder'),{
+
+        ajax: true,
+        keep_oneof_values: false,
+        disable_collapse: true,
+        disable_array_delete_all_rows: true,
+        disable_array_delete_last_row: true,
+        disable_properties: true,
+        // The schema for the editor
+        schema: {
+          "type": "object",
+          "title": "Редактор тестов",
+          "properties": {
+            "name": {
+              "title": "Текст тестов",
+              "type": "string"
+            },
+            "tasks": {
+              "title": "Задания",
+              "type": "array",
+                "format": "tabs",
+              "items": {
+                "title": "Задание",
+                "headerTemplate": "Задание {{i1}}",
+                "oneOf": [{
+                  "$ref": "tests/select_schema.json",
+                  "title": "Выбор правильного варианта"
+                }, {
+                  "$ref": "tests/concordance_schema.json",
+                  "title": "Соответствие"
+                }, {
+                  "$ref": "tests/order_schema.json",
+                  "title": "Сортировка"
+                }, {
+                  "$ref": "tests/order_vert_schema.json",
+                  "title": "Вертикальная сортировка"
+                }, {
+                  "$ref": "tests/checkbox_schema.json",
+                  "title": "Выбор из нескольких"
+                }, {
+                  "$ref": "tests/input_schema.json",
+                  "title": "Ввод значения"
+                }]
+              }
+            }
+          },
+          "required": [
+            "name",
+            "tasks"
+          ]
+        },
+    
+        // Seed the form with a starting value
+        startval: starting_value,
+        
+        // Disable additional properties
+        no_additional_properties: true,
+        
+        // Require all properties by default
+        required_by_default: true
+    });
+
+    document.getElementById('json_file').addEventListener('change',function() {
+        var file = this.files[0];
+
+        if (file.name.match(/\.(txt|json)$/)) {
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                editor.setValue(JSON.parse(reader.result));
+            };
+
+            reader.readAsText(file);
+        } else {
+            alert("Файл не поддерживается, поддерживается только .txt или .json");
+        }
+
+    });
+
+    // Hook up the save_file button to log to the console
+    document.getElementById('save_file').addEventListener('click',function() {
+
+      var json = editor.getValue();
+      var blob = new Blob([JSON.stringify(json,null,2)], {
+        "type": "application/json"
+      });
+      var a = document.createElement("a");
+      a.download = 'test.json';
+      a.href = URL.createObjectURL(blob);
+      document.body.appendChild(a);
+      a.click();
+
+    });
+
+    // Hook up the Restore to Default button
+    document.getElementById('restore').addEventListener('click',function() {
+        editor.setValue(starting_value);
+    });
+
+    // Hook up the validation indicator to update its
+    // status whenever the editor changes
+    editor.on('change',function() {
+        // Get an array of errors from the validator
+        var errors = editor.validate();
+
+        var indicator = document.getElementById('valid_indicator');
+
+        // Not valid
+        if(errors.length) {
+            indicator.className = 'label label-danger'
+            indicator.textContent = "not valid";
+        }
+        // Valid
+        else {
+            indicator.className = 'label label-success'
+            indicator.textContent = "valid";
+        }
+    });
+</script>
+</body>
+</html>
