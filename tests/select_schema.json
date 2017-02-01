@@ -25,6 +25,7 @@
       "type": "array",
       "title": "Предложения",
       "items": {
+        "title": "Предложение",
         "type": "object",
         "headerTemplate": "Предложение {{ i1 }}",
         "properties": {
@@ -37,6 +38,7 @@
             "title": "Варианты",
             "format": "table",
             "items": {
+              "title": "Вариант",
               "type": "object",
               "properties": {
                 "id": {
