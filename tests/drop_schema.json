@@ -80,11 +80,17 @@
         "properties": {
           "id": {
             "title": "Номер",
-            "type": "integer"
+            "type": "integer",
+            "options": {
+              "input_width": "20px"
+            }
           },
           "text": {
             "title": "Текст",
-            "type": "string"
+            "type": "string",
+            "options": {
+              "input_width": "500px"
+            }
           }
         },
         "required": [
