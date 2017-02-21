@@ -39,10 +39,7 @@
           },
           "img": {
             "title": "Имя файла с изображением (если есть)",
-            "type": "null",
-            "options": {
-                 "hidden": true
-            }
+            "type": "string"
           },
           "correct": {
             "type": "array",
