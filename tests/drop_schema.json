@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Классификация",
+  "properties": {
+    "type": {
+      "type": "string",
+      "default": "drop",
+      "options": {
+           "hidden": true
+      }
+    },
+    "lable": {
+      "type": "integer",
+      "default": "{{i1}}",
+      "options": {
+           "hidden": true
+      }
+    },
+    "text": {
+      "type": "string",
+      "format": "textarea",
+      "title": "Текст задания"
+    },
+    "blocks": {
+      "type": "array",
+      "title": "Группы",
+      "items": {
+        "type": "object",
+        "title": "Группа",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Номер"
+          },
+          "text": {
+            "title": "Название группы",
+            "type": "string"
+          },
+          "correct": {
+            "type": "array",
+            "title": "Номера правильных ответов",
+            "format": "table",
+            "items": {
+              "title": "Номер",
+              "type": "integer"
+            }
+          },
+          "answer": {
+            "type": "integer",
+            "default": "{{i1}}",
+            "options": {
+                 "hidden": true
+            }
+          },
+          "img": {
+            "type": "null",
+            "options": {
+                 "hidden": true
+            }
+          }
+        },
+        "required": [
+          "id",
+          "answer",
+          "correct",
+          "text",
+          "img"
+        ]
+      }
+    },
+    "variants": {
+      "type": "array",
+      "title": "Варианты ответов",
+      "format": "table",
+      "items": {
+        "type": "object",
+        "title": "вариант",
+        "properties": {
+          "id": {
+            "title": "Номер",
+            "type": "integer"
+          },
+          "text": {
+            "title": "Текст",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ]
+      }
+    }
+  },
+  "required": [
+    "type",
+    "lable",
+    "text",
+    "blocks",
+    "variants"
+  ]
+}
