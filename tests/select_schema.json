@@ -19,6 +19,7 @@
     },
     "text": {
       "type": "string",
+      "format": "textarea",
       "title": "Текст задания"
     },
     "selects": {
