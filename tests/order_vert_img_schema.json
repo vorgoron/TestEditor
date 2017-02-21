@@ -1,0 +1,70 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"type": {
+			"type": "string",
+			"default": "order",
+			"options": {
+				"hidden": true
+			}
+		},
+		"lable": {
+			"type": "integer",
+			"default": "0",
+			"options": {
+				"hidden": true
+			}
+		},
+		"text": {
+			"type": "string",
+			"format": "textarea",
+			"title": "Текст задания"
+		},
+		"is_vertikal": {
+			"type": "boolean",
+			"format": "checkbox",
+			"title": "Вертикальная?"
+		},
+		"variants": {
+			"title": "Варианты",
+			"format": "table",
+			"type": "array",
+			"items": {
+				"type": "object",
+				"title": "Вариант",
+				"properties": {
+					"id": {
+						"title": "Порядок",
+						"type": "integer",
+						"options": {
+							"input_width": "10px"
+						}
+					},
+					"img": {
+						"title": "Имя файла изображения",
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"img"
+				]
+			}
+		},
+		"answer": {
+			"type": "array",
+			"items": {},
+			"options": {
+				"hidden": true
+			}
+		}
+	},
+	"required": [
+		"type",
+		"lable",
+		"text",
+		"is_vertikal",
+		"variants"
+	]
+}
