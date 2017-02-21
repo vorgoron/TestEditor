@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "default": "concordance",
+      "options": {
+        "hidden": true
+      }
+    },
+    "lable": {
+      "type": "integer",
+      "default": "1",
+      "options": {
+        "hidden": true
+      }
+    },
+    "text": {
+      "type": "string",
+      "format": "textarea",
+      "title": "Текст задания"
+    },
+    "parts": {
+      "type": "array",
+      "title": "Левая часть",
+      "format": "table",
+      "items": {
+        "title": "Строка",
+        "type": "object",
+        "properties": {
+          "img": {
+            "type": "string",
+            "title": "Имя файла изображения"
+          }
+        },
+        "required": [
+          "img"
+        ]
+      }
+    },
+    "variants": {
+      "type": "array",
+      "title": "Правая часть",
+      "format": "table",
+      "items": {
+        "title": "Строка",
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Порядок",
+            "type": "integer",
+            "options": {
+              "input_width": "20px"
+            }
+          },
+          "img": {
+            "title": "Имя файла изображения",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "img"
+        ]
+      }
+    },
+    "answer": {
+      "type": "array",
+      "items": {},
+      "options": {
+        "hidden": true
+      }
+    },
+    "correct": {
+      "type": "array",
+      "items": {},
+      "options": {
+        "hidden": true
+      }
+    }
+  },
+  "required": [
+    "type",
+    "lable",
+    "text",
+    "parts",
+    "variants",
+    "answer",
+    "correct"
+  ]
+}
